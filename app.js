@@ -68,7 +68,7 @@ const start = async () => {
   }
 };
 
-const healthCheckInterval = setInterval(pingPeerServer, 60 * 1000)
+
 const pingPeerServer = async () => {
   try {
     const response = await axios.get('https://job-api-zmaa.onrender.com/health');
@@ -87,5 +87,6 @@ const pingPeerServer = async () => {
 
 
 
+const healthCheckInterval = setInterval(pingPeerServer, 60 * 1000)
 
 start();
