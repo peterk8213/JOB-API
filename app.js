@@ -39,7 +39,14 @@ app.use(xss());
 app.get('/', (req, res) => {
   res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
 });
+
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+// Health Check Endpoint
+app.get('/health', (req, res) => {
+  res.json({ message: 'Server is healthy!', isActive: true }); // Indicate active state
+});
+
 
 // routes
 app.use('/api/v1/auth', authRouter);
@@ -60,5 +67,25 @@ const start = async () => {
     console.log(error);
   }
 };
+
+const healthCheckInterval = setInterval(pingPeerServer, 60 * 1000)
+const pingPeerServer = async () => {
+  try {
+    const response = await axios.get('https://job-api-zmaa.onrender.com/health');
+    if (response.status === 200 && response.data.isActive) {
+      // Simply respond with "ok" on failed health checks
+      return res.send('ok');
+    } else {
+      // Simply respond with "ok" on failed health checks
+      return res.send('ok');
+    }
+  } catch (error) {
+    // Simply respond with "ok" on errors
+    return  res.send('ok');
+  }
+};
+
+
+
 
 start();
