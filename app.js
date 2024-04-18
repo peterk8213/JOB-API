@@ -74,14 +74,14 @@ const pingPeerServer = async () => {
     const response = await axios.get('https://job-api-zmaa.onrender.com/health');
     if (response.status === 200 && response.data.isActive) {
       // Simply respond with "ok" on failed health checks
-      return res.send('ok');
+      return;
     } else {
       // Simply respond with "ok" on failed health checks
-      return res.send('ok');
+      return;
     }
   } catch (error) {
     // Simply respond with "ok" on errors
-    return  res.send('ok');
+    return;
   }
 };
 
